@@ -1,0 +1,40 @@
+name: Add Labels to Pull Requests and Issues
+
+on:
+  pull_request:
+    types: [opened]
+  issues:
+    types: [opened]
+
+jobs:
+  add_labels:
+    name: Add Labels
+    runs-on: ubuntu-latest
+    steps:
+      - name: Add 'needs-review' label to pull request
+        if: github.event_name == 'pull_request'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: needs-review
+        continue-on-error: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Adding 'needs-review' label to pull request"
+          actions-ecosystem/action-add-labels@v1
+          echo "Label added successfully"
+
+      - name: Add 'needs-triage' label to issue
+        if: github.event_name == 'issues'
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          labels: needs-triage
+        continue-on-error: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Adding 'needs-triage' label to issue"
+          actions-ecosystem/action-add-labels@v1
+          echo "Label added successfully"
