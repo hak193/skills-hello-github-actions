@@ -14,5 +14,6 @@ jobs:
       - name: Post a welcome comment
         uses: peter-evans/create-or-update-comment@v3
         with:
-          comment-body: |
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
             Welcome to the project! Your contribution is greatly appreciated!
